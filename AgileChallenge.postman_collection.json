@@ -12,7 +12,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\"amount\":1000000, \"cardType\":\"credit\"}",
+					"raw": "{\"amount\":1000000, \"type\":\"credit\"}",
 					"options": {
 						"raw": {
 							"language": "json"

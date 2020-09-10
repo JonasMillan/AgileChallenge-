@@ -1,14 +1,12 @@
-
 const { UpdateUserAmount } = require("../repository");
 
 const postTransaction = async (req, res) => {
-  const {amount} = req.body
-  const {id} = req.params
-  UpdateUserAmount(id, amount)
-  res.status(200).send({ messsage: 'Done successfully' });
-}
-
+  const { transaction } = req;
+  const { userId, amount } = transaction;
+  UpdateUserAmount(userId, amount);
+  res.status(200).send({ ...transaction });
+};
 
 module.exports = {
-    postTransaction
-}
+  postTransaction,
+};

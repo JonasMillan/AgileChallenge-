@@ -2,28 +2,27 @@ const { effectiveDate } = require("../commons/util");
 const { verifyAmount, addRecord } = require("../repository");
 
 const verifyAccountMoney = (req, res, next) => {
-    const {amount} = req.body  
-    const {id} = req.params
-    const verify = verifyAmount(id, amount)
-    verify ? next() : res.status(403).send({ messsage: 'Insufficient funds' });
-}
+  const { amount } = req.body;
+  const { id } = req.params;
+  const message = verifyAmount(id, amount);
+  message ? res.status(403).send({ message }) : next();
+};
 
-const registerTransaction = (req, res, next) => {
-
-    const {amount, cardType} = req.body
-    const {id} = req.params
-    
-    const record = {
-        userId: id,
-        amount,
-        cardType,
-        effectiveDate: effectiveDate()
-    }
-    addRecord(record)
-    next()
-}
+const registerTransaction = (req, _, next) => {
+  const { amount, type } = req.body;
+  const { id } = req.params;
+  const transaction = {
+    userId: id,
+    amount,
+    type,
+    effectiveDate: effectiveDate(),
+  };
+  req.transaction = transaction;
+  addRecord(transaction);
+  next();
+};
 
 module.exports = {
-    verifyAccountMoney,
-    registerTransaction
-}
+  verifyAccountMoney,
+  registerTransaction,
+};
